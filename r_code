@@ -1,0 +1,288 @@
+#install packages
+#install.packages(c("vioplot", "randomForest", "corrplot", "DMwR2", "ROSE"))
+
+#read file
+data <- read.csv("/Users/colejones/Documents/code/diabetes_prediction_dataset.csv")
+
+#libraries
+library(ggplot2)
+library(dplyr)
+library(caret)
+library(randomForest)
+library(vioplot)
+library(corrplot)
+library(DMwR2)
+library(ROSE)
+
+#exploratory analysis
+
+#data summary
+head(data)
+summary(data)
+nrow(data)
+
+#checking for duplicate rows
+unique_rows <- unique(data)
+n_unique_rows <- nrow(unique_rows)
+
+#number of distinct values per column, checking binary data
+distinct_counts <- sapply(data, function(x) length(unique(x)))
+
+#checking for null values
+any(is.na(data))
+
+#univariative analysis
+data$blood_glucose_level <- as.numeric(data$blood_glucose_level)
+
+#histogram for numeric columns
+hist(data$age, main = "Histogram of Age", xlab = "Age", ylab = "Frequency")
+hist(data$bmi, main = "Histogram of BMI", xlab = "BMI", ylab = "Frequency")
+hist(data$HbA1c_level, main = "Histogram of HbA1c Level", xlab = "HbA1c Level", ylab = "Frequency")
+hist(data$blood_glucose_level, main = "Histogram of Blood Glucose Level", xlab = "Blood Glucose Level", ylab = "Frequency")
+
+#create tables for qualitative columns
+diabetes_counts <- table(data$diabetes)
+hypertension_counts <- table(data$hypertension)
+smoking_history_counts <- table(data$smoking_history)
+gender_counts <- table(data$gender)
+heart_disease_counts <- table(data$heart_disease)
+blood_glucose_level <- table(data$blood_glucose_level)
+
+#barplots for qualitative columns
+barplot(diabetes_counts, main = "Barplot of Diabetes", xlab = "Diabetes", ylab = "Frequency")
+barplot(hypertension_counts, main = "Barplot of Hypertension", xlab = "Hypertension", ylab = "Frequency")
+barplot(smoking_history_counts, main = "Barplot of Smoking History", xlab = "Smoking History", ylab = "Frequency")
+barplot(gender_counts, main = "Barplot of Gender", xlab = "Gender", ylab = "Frequency")
+barplot(heart_disease_counts, main = "Barplot of Heart Disease", xlab = "Heart Disease", ylab = "Frequency")
+barplot(smoking_history_counts, main = "Barplot of Smoking History", xlab = "Smoking History", ylab = "Frequency")
+
+#box plots
+boxplot(bmi ~ diabetes, data = data, main = "Boxplot of Diabetes and BMI", xlab = "Diabetes", ylab = "BMI")
+boxplot(HbA1c_level ~ diabetes, data = data, main = "Boxplot of Diabetes and HbA1c Level", xlab = "Diabetes", ylab = "HbA1c Level")
+boxplot(blood_glucose_level ~ diabetes, data = data, main = "Boxplot of Diabetes and Blood Glucose Level", xlab = "Diabetes", ylab = "Blood Glucose Level")
+boxplot(age ~ diabetes, data = data, main = "Boxplot of Diabetes and Age", xlab = "Diabetes", ylab = "Age")
+
+#tables for qualitative bivariate 
+table_diabetes_gender <- table(data$diabetes, data$gender)
+table_diabetes_smoking_history <- table(data$diabetes, data$smoking_history)
+table_diabetes_hypertension <- table(data$diabetes, data$hypertension)
+
+#bar plots
+barplot(table_diabetes_gender, main = "Barplot of Diabetes and Gender", xlab = "Gender", ylab = "Frequency")
+barplot(table_diabetes_gender, main = "Barplot of Diabetes by Gender", xlab = "Gender", ylab = "Frequency")
+barplot(table_diabetes_smoking_history, main = "Barplot of Diabetes and Smoking History", xlab = "Gender", ylab = "Frequency")
+
+#scatter plot for age and bmi by diabetes
+ggplot(data = data, aes(age, bmi, color = factor(diabetes))) + 
+  geom_point(data = subset(data, diabetes == 0), alpha = 0.5) + 
+  geom_point(data = subset(data, diabetes == 1), alpha = 0.5) +
+  geom_smooth(data = subset(data, diabetes == 0), method = "lm", se = FALSE, color = "grey") +
+  geom_smooth(data = subset(data, diabetes == 1), method = "lm", se = FALSE, color = "red") +
+  scale_color_manual(values = c("black", "blue"), labels = c("No Diabetes", "Diabetes")) +
+  labs(x = "Age", y = "BMI") +
+  theme_minimal()
+
+#scatter plot for age and HbA1c_level by diabetes
+ggplot(data = data, aes(age, HbA1c_level, color = factor(diabetes))) +
+  geom_point(size = 3, alpha = 0.7) +
+  stat_smooth() +
+  scale_color_manual(values = c("black", "blue"), labels = c("No Diabetes", "Diabetes")) +
+  labs(x = "Age", y = "HbA1c_level") +
+  theme_minimal()
+
+#age and blood_glucose_level by diabetes
+ggplot(data = data, aes(age, blood_glucose_level, color = factor(diabetes))) +
+  geom_point(size = 3, alpha = 0.7) +
+  scale_color_manual(values = c("black", "blue"), labels = c("No Diabetes", "Diabetes")) +
+  labs(x = "Age", y = "Blood Glucose Level") +
+  theme_minimal()
+
+#vioplot for diabetes and bmi by gender
+ggplot(data, aes(diabetes, age, fill = gender)) + 
+  geom_violin() +
+  labs(x = "diabetes", y = "age") +
+  scale_fill_manual(values = c("Female" = "black", "Male" = "blue"))
+
+#box plot for diabetes and age by gender
+ggplot(data, aes(x = diabetes, y = age, fill = gender)) +
+  geom_boxplot() +
+  labs(x = "diabetes", y = "age") +
+  scale_fill_manual(values = c("Female" = "black", "Male" = "blue"))
+
+#pre-processing data
+
+#convert categorical variables to dummy (not to be applied for exploratory analysis)
+data$female <- ifelse(data$gender == "Female", 1, 0)
+data$male <- ifelse(data$gender == "Male", 1, 0)
+data$other <- ifelse(data$gender == "Other", 1, 0)
+data$never_smoked <- ifelse(data$smoking_history %in% c("never", "No Info"), 1, 0)
+data$smoked_in_past <- ifelse(data$smoking_history %in% c("ever", "former", "not current"), 1, 0)
+data$currently_smokes <- ifelse(data$smoking_history %in% c("current"), 1, 0)
+
+#delete columns
+data$gender <- NULL
+data$smoking_history <- NULL
+
+#scale and center numeric variables
+variables_to_scale <- data[, c('age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'hypertension', 'heart_disease')]
+scaled_and_centered_variables <- as.data.frame(scale(variables_to_scale))
+data[, c('age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'hypertension', 'heart_disease')] <- scaled_and_centered_variables
+
+#convert diabetes to a factor
+data.class(data$diabetes)
+data$diabetes = as.factor(data$diabetes)
+
+#seed for reproducibility
+set.seed(1)
+
+#data partitioning for random forest model
+data_set_size = floor(nrow(data)*.8)
+index <- sample(1:nrow(data), size = data_set_size)
+training <- data[index,]
+testing <- data[-index,]
+
+#correlation
+
+#finding non-numeric columns
+non_numeric_vars <- !sapply(data, is.numeric)
+non_numeric_columns <- names(data)[non_numeric_vars]
+print(non_numeric_columns)
+
+data <- as.data.frame(sapply(data, as.numeric))
+str(data)
+
+#color correlation matrix
+correlation_matrix <- cor(data)
+corrplot(correlation_matrix, method = "color", type = "upper", tl.cex = 0.7)
+
+#correlation table diabetes with other variables
+diabetes_correlation <- correlation_matrix[,"diabetes"]
+diabetes_correlation
+
+#predictive analysis using random forest
+
+#model 1
+
+#seed for reproducibility
+set.seed(1)
+
+#random forest model without resampling to address the minority class
+rf_model <- randomForest(diabetes ~ ., data = training, mtry = 4, ntree = 501, importance = TRUE)
+rf_model
+
+#See what the algorithm predicted against actual results
+results_1 <- data.frame(testing$diabetes, predict(rf_model, testing[,1:8], type = "response"))
+results_1
+
+#plot shows number of trees can be truncated to 501 without much loss of predictive accuracy
+plot(rf_model)
+
+#model 2
+
+#oversampling and undersampling for better sensitivity
+table(training$diabetes)
+both_sampling_data <- ovun.sample(diabetes ~ ., data = training, method = "both", p = 0.4, N = 70000)$data
+
+table(both_sampling_data$diabetes)
+
+both_sampling_data$diabetes <- as.factor(both_sampling_data$diabetes)
+
+#seed for reproducibility
+set.seed(1)
+
+rf_model_2 <- randomForest(diabetes ~ ., data = both_sampling_data, mtry = 4, ntree = 501, importance = TRUE)
+rf_model_2
+
+#split data into independent and dependent variables
+independent_variables <- both_sampling_data[, c("bmi", "age", "hypertension", "blood_glucose_level", "heart_disease", "HbA1c_level", "male", "female", "other", "never_smoked", "smoked_in_past", "currently_smokes")]
+dependent_variable <- both_sampling_data$diabetes
+
+#hypertune mtry
+best_mtry <- tuneRF(x = independent_variables,
+  y = dependent_variable,
+  mtryStart = 5,
+  ntreeTry = 20,
+  stepFactor = 1.5,
+  improve = 1e-5,
+  trace = TRUE,
+  plot = TRUE,
+  doBest = TRUE,
+  nodesize = 30,
+  importance = TRUE)
+
+print(best_mtry)
+plot(best_mtry)
+
+#see what algorithm 2 predicted against actual results
+results_2 <- data.frame(testing$diabetes, predict(rf_model_2, testing[,1:8], type = "response"))
+results_2
+
+#plot model 2
+plot(rf_model_w)
+
+#apply model 2 to testing data
+predicted_2 <- predict(rf_model_2, testing, type = "response")
+predicted_2 <- factor(ifelse(predicted[, 2] > 0.5, "1", "0"), levels = c("0", "1"))
+actual_3 <- factor(testing$diabetes, levels = c("0", "1"))
+
+#model 3: model 2's performance on testing data
+confusionMatrix(predicted_2, actual_3, positive = "1")
+
+#model 2's feature importance
+feature_importance_2 <- importance(rf_model_2)
+feature_importance_2
+
+
+
+#additional models not used in the analysis
+
+#model 4
+
+#undersampling for better sensitivity
+table(training$diabetes)
+under_sampling_data <- ovun.sample(diabetes ~ ., data = training, method = "under", N = 13668)$data
+
+table(under_sampling_data$diabetes)
+
+#seed for reproducibility
+set.seed(1)
+
+#random forest model with undersampling
+rf_model_4 <- randomForest(diabetes ~ ., data = under_sampling_data, mtry = 4, ntree = 501, importance = TRUE)
+rf_model_4
+
+#see what algorithm 4 predicted against actual results
+results_4 <- data.frame(testing$diabetes, predict(rf_model_4, testing[,1:8], type = "response"))
+results_4
+
+#plot model 4
+plot(rf_model_4)
+
+#model 5
+
+#oversampling for better sensitivity
+table(training$diabetes)
+over_sampling_data <- ovun.sample(diabetes ~ ., data = training, method = "over", N = 146332)$data
+table(over_sampling_data$diabetes)
+
+#seed for reproducibility
+set.seed(1)
+
+over_sampling_data$diabetes <- as.factor(over_sampling_data$diabetes)
+rf_model_5 <- randomForest(diabetes ~ ., data = over_sampling_data, mtry = 4, ntree = 501, importance = TRUE)
+rf_model_5
+
+#see what algorithm 3 predicted against actual results
+results_5 <- data.frame(testing$diabetes, predict(rf_model_5, testing[,1:8], type = "response"))
+results_5
+
+#plot model 3
+plot(rf_model_5)
+
+#apply model 5 to testing data
+predicted_5 <- predict(rf_model_3, testing, type = "response")
+predicted_5 <- factor(ifelse(predicted[, 2] > 0.5, "1", "0"), levels = c("0", "1"))
+actual_5 <- factor(testing$diabetes, levels = c("0", "1"))
+
+#model 5's performance on testing data
+confusionMatrix(predicted_5, actual_5, positive = "1")
