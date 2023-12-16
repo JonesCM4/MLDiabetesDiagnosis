@@ -228,62 +228,62 @@ I uncovered a concerning observation regarding the blood_glucose_level and hbA1c
 1. **`Age`**: Age is a significant factor in determining the likelihood of developing diabetes. As individuals grow older, their risk increases due to factors like reduced physical activity, hormonal changes, and the possibility of developing other health issues that contribute to diabetes. Age is a numeric variable.
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/1a192d20-eee1-4828-8244-3140e2b6fc94" alt="pic" width="500" height="400">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/999573ed-0460-4005-9aa3-47fe63c3de44" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/a9ce319c-5c6b-47dd-b0b9-99c3ac5dd5b7" alt="pic" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/f7027550-6d98-42fd-be2c-220d96365202" alt="pic" width="500" height="400">
 </div>
 
 2. **`Gender`**: Gender also plays a role in diabetes risk, albeit with some variation (as we will come to find out). Gender is a categorical variable that is transformed into dummy variables for analysis (female, male, and other).
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/31f43889-b70f-4155-bdfa-19774fe32659" width="500" height="400">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/30d4a7a2-08b0-473d-9d8b-fa6c6f2f7fc7" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/a7ba0c98-d40e-4178-b0d5-95910dfd6215" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/b0b9af00-8093-48fd-8450-af0b13d03de9" width="500" height="400">
 </div>
 
 3. **`Body Mass Index (BMI)`:** BMI is a useful indicator for predicting diabetes risk. Excess body fat, particularly around the waist, can lead to insulin resistance and hinder the body's ability to regulate blood sugar levels. BMI is a numeric variable.
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/6c8db498-516d-4058-83a5-d2a87696cbc3" width="500" height="400">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/1a7adb64-7d50-46db-9c84-241875952772" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/e3652b95-352b-4e46-b573-a07134336358" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/84b86f8c-bab4-4644-928d-fd724237e01e" width="500" height="400">
 </div>
 
 4. **`Hypertension`:** Hypertension (high blood pressure) raises the risk of developing diabetes, and vice versa. The presence of hypertension in any given observation is represented as 1, the absence thereof is represented as 0. Hypertension is a binary variable.
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/1b2c1ee5-18bd-4a4b-b0af-d85a1f13be47" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/fbdf5d2c-f904-41d1-a7b3-03026f204764" width="500" height="400">
 
 </div>
 
 5. **`Heart Disease`:** Heart disease, including conditions such as coronary artery disease and heart failure, is associated with an increased risk of diabetes. The presence of heart disease in any given observation is represented as 1, the absense thereof is represented as 0. Heart disease is a binary variable.
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/284a22a2-96bd-4b26-8137-78ee55149d5c" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/ca132c86-930f-4bc9-8940-eeb975a1f8de" width="500" height="400">
 
 </div>
 
 6. **`Smoking History`:** Smoking has been found to increase the risk of developing type 2 diabetes. Smoking can contribute to insulin resistance and impair glucose metabolism. Some studies suggest that quitting smoking can significantly reduce the risk of developing diabetes and its complications. Smoking history is a categorical variable that for the purposes of my analysis was changed to dummy variables where "No Info" and "never" = never_smoked, "ever", "former", and "non-current" = smoked_in_past, and "current" = currently_smokes. 
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/2443d593-a37b-476e-8a4d-930f36197e21" width="500" height="400">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/d486742a-ef11-47f8-9b6e-2fdca647794f" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/644c3996-019c-4cc9-87b2-8e4c7f84ef63" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/83dddd05-3f85-4477-b18f-b4d32bc5052a" width="500" height="400">
 </div>
 
 7. **`HbA1c Level`:** HbA1c (glycated hemoglobin) is a measure of the average blood glucose level over the past 2-3 months. It provides information about long-term blood sugar control. Higher HbA1c levels indicate poorer glycemic control and are associated with an increased risk of developing diabetes and its complications. hbA1c_level is a numeric variable.
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/c0881102-037c-4d66-b2ba-459ed4eaef89" alt="pic" width="500" height="400">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/da18b94c-1f26-461c-a048-18d520f7d98a" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/4dcc1148-1b1f-4e70-bbc4-5511de8d656a" alt="pic" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/f031816a-fc5e-46bb-85e8-075a966de98c" width="500" height="400">
 </div>
 
 8. **`Blood Glucose Level`:** Blood glucose level refers to the amount of glucose (sugar) present in the blood at a given time. Elevated blood glucose levels, particularly in the fasting state or after consuming carbohydrates, can indicate impaired glucose regulation and increase the risk of developing diabetes. This is a numeric variable. 
 
 <div style="text-align: center;">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/8551eaf9-f0ea-4e2a-887e-0a47b4268ce5" alt="pic" width="500" height="400">
-  <img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/61e86b25-24f6-411f-9e54-85c27b390cbe" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/f9e573c6-d14c-480a-9847-b6fddd74acbe" alt="pic" width="500" height="400">
+  <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/8d926842-2ae8-468e-b5e6-ce20bd4fc0cc" width="500" height="400">
 </div>
 
 9. **`Diabetes`:** The diabetes variable is the outcome variable which is used to train the classification models to determine whether the presence of diabetes can be inferred based on other variables. 
 
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/2ad983cf-0964-4bf9-9376-60189c969c32" width="500" height="400"> <br>
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/6fb244b1-bc7c-44af-96b3-76cfbe35534a" width="500" height="400"> <br>
 <br>
 <br>
 
@@ -291,19 +291,19 @@ I uncovered a concerning observation regarding the blood_glucose_level and hbA1c
 
 **`Scatterplot for age and bmi by diabetes`:** Represented by the red line is the line of best fit for people with diabetes. Similarly, represented by the gray line is the line of best fit for people without diabetes.
 <br>
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/570e841f-9cba-4161-9252-0c14211107fc" width="500" height="400">
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/14b6df51-5ad8-4313-b456-34c3a641220d" width="500" height="400">
 <br>
 <br>
 
-**`Scatterplot for age and hbA1c_level by diabetes`:** Notice the odd groupings across the hbA1c_level variable. 
+**`Scatterplot for age and hbA1c_level by diabetes`:**
 <br>
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/98edf78a-632c-496b-b97d-4e4538239fd5" width="500" height="400">
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/bb9446eb-6b74-4257-8063-9329bcf0e70c" width="500" height="400">
 <br>
 <br>
 
-**`Scatterplot for age and blood_glucose_level by diabetes`:** Notice the odd groupings across the blood_glucose_level variable. 
+**`Scatterplot for age and blood_glucose_level by diabetes`:**
 <br>
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/8f6ff0db-2e47-4876-aca0-1044ff6ec52f" width="500" height="400">
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/86663454-1c75-4d3d-96b9-4ba109631afa" width="500" height="400">
 <br>
 <br>
 
@@ -349,7 +349,7 @@ testing <- data[-index,]
 A correlation matrix was computed to examine the relationships between different variables in the dataset. Categorical variables were transformed into dummy variables. The correlation of diabetes with each variable indicates the strength and direction of their linear relationship. Positive correlations suggest that higher values of a variable are associated with a higher likelihood of diabetes, while negative correlations indicate an inverse relationship. Note that correlation does not imply causation, and additional analysis is needed to interpret casual relationships accurately.
 <br>
 <br>
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/73c38232-b307-4107-b482-6d5dd35d6138" width="500" height="400">
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/b8bed088-ba9d-4f98-ab92-25140fc165bc" width="500" height="400">
 <br>
 <br>
 <table>
@@ -449,7 +449,7 @@ Initially, I used training data to create a baseline random forest model and the
 <br>
 
 <h5>Model 1 Plot</h5>
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/a24e4f46-8482-40ba-b6fa-8825be299ef0" width="500" height="400"> <br>
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/715e0977-09ff-455c-a164-3eeb7bdcaf22" width="500" height="400"> <br>
 <br>
 
 In Model 1, the OOB estimate of 3% suggests that, on average, the model is expected to accurately predict 97% of the cases it encounters. However, there is a high class error rate of 33% for type two error (false negatives). This indicates that the model struggles to accurately diagnose diabetes when patients truly have diabetes. Given that approximately 91% of the observations are not diagnosed with diabetes, I suspected that addressing the majority-minority class variation would lower type two error. To test my theory, I applied both undersampling to the majority class and oversampling to the minority class of my next model to limit the bias of the model's prediction towards the majority class. I also employed a hyperparameter tuning algorithm on the mtry parameter and reduced the number of trees in the model from 2001 to 501.
@@ -509,7 +509,7 @@ Model 2 addresses the class imbalance through both oversampling and undersamplin
 <br>
 
 <h5>Model 2 Mtry Hypertuning Results</h5>
-<img src="https://github.com/JonesCM4/MLforDiabetesDiagnosis/assets/126039483/a58ea7b7-3e36-49c6-be57-ae85560f40bc" width="500" height="400"> <br>
+<img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/42f09fd4-b68b-4df5-a632-58f6d246cd8e" width="500" height="400"> <br>
 <br>
 
 ```ruby
