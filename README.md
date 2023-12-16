@@ -295,13 +295,13 @@ I uncovered a concerning observation regarding the blood_glucose_level and hbA1c
 <br>
 <br>
 
-**`Scatterplot for age and hbA1c_level by diabetes`:**
+**`Scatterplot for age and hbA1c_level by diabetes`**
 <br>
 <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/bb9446eb-6b74-4257-8063-9329bcf0e70c" width="500" height="400">
 <br>
 <br>
 
-**`Scatterplot for age and blood_glucose_level by diabetes`:**
+**`Scatterplot for age and blood_glucose_level by diabetes`**
 <br>
 <img src="https://github.com/JonesCM4/MLDiabetesDiagnosis/assets/126039483/86663454-1c75-4d3d-96b9-4ba109631afa" width="500" height="400">
 <br>
